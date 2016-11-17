@@ -44,6 +44,7 @@ public class MonitorPowerService extends Service {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		unregisterReceiver(batteryChangedReceiver);
 	}
 
 	// 接受电池信息更新的广播
@@ -75,8 +76,8 @@ public class MonitorPowerService extends Service {
 				editor.putBoolean(Message.POWER_LOW_NOTICE, false);
 				editor.commit();
 			}
-			Log.e("smslevel:", "" + level);
-			Log.e("smstel:", "" + tel);
+			Log.e("Battery Level:", "" + level);
+			Log.e("Alter Tel:", "" + tel);
 			if(tel != null && !tel.equals("")  && sms!= null){
 				SmsManager.getDefault().sendTextMessage(tel, null, sms, null,
 						null);
